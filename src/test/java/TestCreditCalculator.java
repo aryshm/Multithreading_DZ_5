@@ -24,15 +24,15 @@ public class TestCreditCalculator {
 
     @ParameterizedTest
     @MethodSource("source1")
-    public void testTotalRefund(int creditAmount, int creditDuration, int expected) {
-        int actual = sut.totalRefund(creditAmount, creditDuration);
+    public void testTotalRefund(int creditAmount, int creditDuration, double rate, int expected) {
+        int actual = sut.totalRefund(creditAmount, creditDuration, rate);
         Assertions.assertEquals(expected, actual);
     }
 
     @ParameterizedTest
     @MethodSource("source2")
-    public void testOverpaymentCalculation (int creditAmount, int totalRefund, int expected) {
-        int actual = sut.overpaymentCalculation(creditAmount, totalRefund);
+    public void testOverpaymentCalculation(int creditAmount, int creditDuration, double rate, int expected) {
+        int actual = sut.overpaymentCalculation(creditAmount, creditDuration, rate);
         Assertions.assertEquals(expected, actual);
     }
 
@@ -44,13 +44,13 @@ public class TestCreditCalculator {
 
     private static Stream<Arguments> source1() {
         return Stream.of(
-                Arguments.of(1_500_000, 60, 1_907_808)
+                Arguments.of(1_500_000, 60, 9.9, 1_907_808)
         );
     }
 
     private static Stream<Arguments> source2() {
         return Stream.of(
-                Arguments.of(1_500_000, 1_907_808, 407_808)
+                Arguments.of(1_500_000, 60, 9.9, 407_808)
         );
     }
 }
